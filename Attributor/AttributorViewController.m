@@ -7,11 +7,12 @@
 //
 
 #import "AttributorViewController.h"
+#import "TextStatusViewController.h"
 
 @interface AttributorViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextView *body;
-@property (weak, nonatomic) IBOutlet UILabel *headLine;
+@property (weak, nonatomic) IBOutlet UILabel *headLine; //TODO Remove the headline!
 @property (weak, nonatomic) IBOutlet UIButton *outlineButton;
 @end
 
@@ -20,6 +21,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupOutlineButton];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"Analyze Text"]) {
+        if ([segue.destinationViewController isKindOfClass:[TextStatusViewController class]]) {
+            //TextStatusViewController *tsvc = (TextStatusViewController *) segue.destinationViewController;
+            TextStatusViewController *tsvc = segue.destinationViewController;
+            tsvc.textToAnalyze = self.body.textStorage;
+        }
+    }
 }
 
 - (void)setupOutlineButton {
